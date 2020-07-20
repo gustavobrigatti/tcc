@@ -109,6 +109,7 @@ class InboxController extends controller
                 }
             }
         }
+        $users = $users->unique();
         $users = $users->sortBy('name')->sortBy('role')->groupBy('role');
         return view('inbox.edit', [
             'users' => $users
