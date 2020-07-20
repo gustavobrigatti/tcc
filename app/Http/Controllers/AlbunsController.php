@@ -25,7 +25,12 @@ class AlbunsController extends Controller
             $albuns = Album::where('escola_id', Auth::user()->escola_id)->orderBy('created_at')->get();
         } else if ($role <= 500) {
             if ($role == 400) {
-                $albuns_id = DB::table('album_turmas')->whereIn('turma_id', Auth::user()->professor_turmas->pluck('id')->all())->pluck('album_id')->all();
+                $turmas = [];
+                foreach(Auth::user()->aulaTurma as $aulaTurma){
+                    $turmas[] = $aulaTurma->turma->id;
+                }
+                $turmas = array_unique($turmas);
+                $albuns_id = DB::table('album_turmas')->whereIn('turma_id', $turmas)->pluck('album_id')->all();
             } else {
                 $albuns_id = DB::table('album_turmas')->whereIn('turma_id', Auth::user()->aluno_turmas->pluck('id')->all())->pluck('album_id')->all();
             }

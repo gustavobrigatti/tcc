@@ -37,6 +37,7 @@ class AulaTurmaController extends Controller
             'aula_id' => 'required',
             'user_id' => 'required',
             'turma_id' => 'required',
+            'dia_semana' => 'required',
             'hora_inicio' => 'required',
             'hora_fim' => 'required'
         ]);
@@ -51,6 +52,7 @@ class AulaTurmaController extends Controller
         $aulaTurma->turma_id = $request->turma_id;
         $aulaTurma->hora_inicio = $request->hora_inicio;
         $aulaTurma->hora_fim = $request->hora_fim;
+        $aulaTurma->dia_semana = $request->dia_semana;
         return $aulaTurma;
     }
 }

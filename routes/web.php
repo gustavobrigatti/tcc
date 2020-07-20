@@ -87,6 +87,13 @@ Route::group(['middleware' => ['auth']], function () {
         //Rotas para aula_turma
         Route::resource('aulaTurma', 'AulaTurmaController');
     });
+    //Rotas acessadas apenas por usuários logados do tipo 400 e 500
+    Route::group(['middleware' => ['CheckUserRole:400,500']], function () {
+        //Rotas para grade de horários
+        Route::get('/grade', function (){
+            return view('grade.index');
+        })->name('grade');
+    });
 });
 
 

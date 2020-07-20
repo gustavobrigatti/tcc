@@ -12,7 +12,7 @@ class Aula_Turma extends Model
 
     protected $table = 'aula_turma';
 
-    protected $fillable = ['aula_id', 'turma_id', 'user_id', 'hora_inicio', 'hora_fim'];
+    protected $fillable = ['aula_id', 'turma_id', 'user_id', 'hora_inicio', 'hora_fim', 'dia_semana'];
 
     public function user(){
         return $this->belongsTo(User::class);

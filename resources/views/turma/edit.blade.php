@@ -146,48 +146,300 @@
                     </div>
                     <div class="body">
                         @if(count($turma->aulas) > 0)
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
-                                    <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Professor</th>
-                                        <th>Horário</th>
-                                        <th class="col-xs-1">Ações</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Professor</th>
-                                        <th>Horário</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    @forelse($turma->aulas->sortBy('hora_inicio') as $aulaTurma)
-                                        <tr>
-                                            <td style="vertical-align: middle;">
-                                                {{ $aulaTurma->aula->nome }}
-                                            </td>
-                                            <td style="vertical-align: middle;text-align: center;">
-                                                {{ $aulaTurma->user->name }}
-                                            </td>
-                                            <td style="vertical-align: middle;text-align: center;">
-                                                {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
-                                            </td>
-                                            <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
-                                            <form id="excluirAula{{ $aulaTurma->id }}"
-                                                  action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
-                                                  method="POST">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" name="_method" value="DELETE"/>
-                                            </form>
-                                        </tr>
-                                    @empty
-                                    @endforelse
-                                    </tbody>
-                                </table>
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#segunda" aria-controls="settings" role="tab" data-toggle="tab">Segunda</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#terca" aria-controls="settings" role="tab" data-toggle="tab">Terça</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#quarta" aria-controls="settings" role="tab" data-toggle="tab">Quarta</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#quinta" aria-controls="settings" role="tab" data-toggle="tab">Quinta</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#sexta" aria-controls="settings" role="tab" data-toggle="tab">Sexta</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#sabado" aria-controls="settings" role="tab" data-toggle="tab">Sábado</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active" id="segunda">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th class="col-xs-1">Ações</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                @forelse($turma->aulas->where('dia_semana', 'segunda')->sortBy('hora_inicio') as $aulaTurma)
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">
+                                                            {{ $aulaTurma->aula->nome }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ $aulaTurma->user->name }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                                        <form id="excluirAula{{ $aulaTurma->id }}"
+                                                              action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                              method="POST">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE"/>
+                                                        </form>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade in" id="terca">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th class="col-xs-1">Ações</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                @forelse($turma->aulas->where('dia_semana', 'terca')->sortBy('hora_inicio') as $aulaTurma)
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">
+                                                            {{ $aulaTurma->aula->nome }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ $aulaTurma->user->name }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                                        <form id="excluirAula{{ $aulaTurma->id }}"
+                                                              action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                              method="POST">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE"/>
+                                                        </form>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade in" id="quarta">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th class="col-xs-1">Ações</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                @forelse($turma->aulas->where('dia_semana', 'quarta')->sortBy('hora_inicio') as $aulaTurma)
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">
+                                                            {{ $aulaTurma->aula->nome }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ $aulaTurma->user->name }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                                        <form id="excluirAula{{ $aulaTurma->id }}"
+                                                              action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                              method="POST">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE"/>
+                                                        </form>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade in" id="quinta">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th class="col-xs-1">Ações</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                @forelse($turma->aulas->where('dia_semana', 'quinta')->sortBy('hora_inicio') as $aulaTurma)
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">
+                                                            {{ $aulaTurma->aula->nome }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ $aulaTurma->user->name }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                                        <form id="excluirAula{{ $aulaTurma->id }}"
+                                                              action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                              method="POST">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE"/>
+                                                        </form>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade in" id="sexta">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th class="col-xs-1">Ações</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                @forelse($turma->aulas->where('dia_semana', 'sexta')->sortBy('hora_inicio') as $aulaTurma)
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">
+                                                            {{ $aulaTurma->aula->nome }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ $aulaTurma->user->name }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                                        <form id="excluirAula{{ $aulaTurma->id }}"
+                                                              action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                              method="POST">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE"/>
+                                                        </form>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade in" id="sabado">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th class="col-xs-1">Ações</th>
+                                                </tr>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Professor</th>
+                                                    <th>Horário</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                @forelse($turma->aulas->where('dia_semana', 'sabado')->sortBy('hora_inicio') as $aulaTurma)
+                                                    <tr>
+                                                        <td style="vertical-align: middle;">
+                                                            {{ $aulaTurma->aula->nome }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ $aulaTurma->user->name }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;">
+                                                            {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                                        </td>
+                                                        <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                                        <form id="excluirAula{{ $aulaTurma->id }}"
+                                                              action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                              method="POST">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE"/>
+                                                        </form>
+                                                    </tr>
+                                                @empty
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <br>
                         @endif
@@ -216,6 +468,22 @@
                                             @foreach($profesores as $professor)
                                                 <option value="{{ $professor->id }}">{{ $professor->name }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <p><b>Dia da semana</b></p>
+                                        <select name="dia_semana" class="form-control show-tick" required>
+                                            <option value="0" selected disabled>Selecione o dia da semana</option>
+                                            <option value="segunda">Segunda</option>
+                                            <option value="terca">Terça</option>
+                                            <option value="quarta">Quarta</option>
+                                            <option value="quinta">Quinta</option>
+                                            <option value="sexta">Sexta</option>
+                                            <option value="sabado">Sábado</option>
                                         </select>
                                     </div>
                                 </div>

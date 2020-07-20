@@ -193,6 +193,20 @@
                         </ul>
                     </li>
                 @endif
+                @if(\Illuminate\Support\Facades\Auth::user()->role == '400' || \Illuminate\Support\Facades\Auth::user()->role == '500')
+                    <li class="{{ \Request::route()->getName() == 'grade' ? 'active':'' }}">
+                        <a href="{{ route('grade') }}">
+                            <i class="material-icons">today</i>
+                            <span>Grade de Horários</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <i class="material-icons">grade</i>
+                            <span>Notas</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="{{ \Request::route()->getName() == 'inbox.favoritas' || \Request::route()->getName() == 'inbox.arquivadas' || \Request::route()->getName() == 'inbox.excluidas' || \Request::route()->getName() == 'inbox.enviadas' ? 'active':""}}">
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">email</i>
