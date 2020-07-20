@@ -84,6 +84,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('turma', 'TurmasController');
         //Rotas para aulas
         Route::resource('aula', 'AulaController');
+        //Rotas para aula_turma
+        Route::resource('aulaTurma', 'AulaTurmaController');
     });
 });
 

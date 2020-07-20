@@ -19,6 +19,13 @@
     <script src="js/admin.js"></script>
     <script src="js/pages/forms/form-validation.js"></script>
     <script src="js/pages/forms/advanced-form-elements.js"></script>
+
+    <script src="js/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            $('.hour').mask('00:00');
+        }, false);
+    </script>
 @endpush
 
 @section('content')
@@ -70,20 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <p><b>Professores</b></p>
-                                    <select name="professores[]" id="professores" class="form-control show-tick"
-                                            data-live-search="true" multiple>
-                                        @foreach($profesores as $profesor)
-                                            <option value="{{ $profesor->id }}" {{ in_array($profesor->id, $turma->professores->pluck('id')->all()) ? 'selected':'' }}>{{ $profesor->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-12">
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <p><b>Alunos</b></p>
@@ -131,9 +125,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 100%">
-                            <button class="btn btn-primary waves-effect" style="width: 100%" type="submit">CADASTRAR
-                            </button>
+                        <div>
+                            <button class="btn btn-primary btn-block waves-effect" type="submit">CADASTRAR</button>
                         </div>
                     </form>
                 </div>
@@ -142,4 +135,114 @@
     </div>
     <!-- #END# Advanced Select -->
 
+    @if($id > 0)
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            AULAS
+                        </h2>
+                    </div>
+                    <div class="body">
+                        @if(count($turma->aulas) > 0)
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable" style="white-space: nowrap;">
+                                    <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Professor</th>
+                                        <th>Horário</th>
+                                        <th class="col-xs-1">Ações</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Professor</th>
+                                        <th>Horário</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    @forelse($turma->aulas->sortBy('hora_inicio') as $aulaTurma)
+                                        <tr>
+                                            <td style="vertical-align: middle;">
+                                                {{ $aulaTurma->aula->nome }}
+                                            </td>
+                                            <td style="vertical-align: middle;text-align: center;">
+                                                {{ $aulaTurma->user->name }}
+                                            </td>
+                                            <td style="vertical-align: middle;text-align: center;">
+                                                {{ substr($aulaTurma->hora_inicio, 0, 5) }} às {{ substr($aulaTurma->hora_fim, 0, 5) }}
+                                            </td>
+                                            <td style="vertical-align: middle;text-align: center;"><a href="javascript:document.getElementById('excluirAula{{ $aulaTurma->id }}').submit();" class="btn btn-primary waves-effect"><i class="material-icons">delete</i></a></td>
+                                            <form id="excluirAula{{ $aulaTurma->id }}"
+                                                  action="{{ route('aulaTurma.destroy', $aulaTurma->hash_id)  }}"
+                                                  method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="_method" value="DELETE"/>
+                                            </form>
+                                        </tr>
+                                    @empty
+                                    @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                        @endif
+                        <form id="form_advanced_validation" action="{{ route('aulaTurma.store') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="turma_id" value="{{ $id }}">
+                            <div class="col-xs-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <p><b>Aula</b></p>
+                                        <select name="aula_id" id="aula" class="form-control show-tick" data-live-search="true" required>
+                                            <option value="0" selected disabled>Selecione a aula</option>
+                                            @foreach($aulas as $aula)
+                                                <option value="{{ $aula->id }}">{{ $aula->nome }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <p><b>Professor</b></p>
+                                        <select name="user_id" id="professor" class="form-control show-tick" data-live-search="true" required>
+                                            <option value="0" selected disabled>Selecione o professor</option>
+                                            @foreach($profesores as $professor)
+                                                <option value="{{ $professor->id }}">{{ $professor->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control hour" name="hora_inicio" required>
+                                        <label class="form-label">Hora Início</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control hour" name="hora_fim" required>
+                                        <label class="form-label">Hora Fim</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-block waves-effect" type="submit">CADASTRAR</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection

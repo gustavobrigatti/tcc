@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Aula;
 use App\Models\Turma;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,10 +25,12 @@ class TurmasController extends Controller
 
     public function edit($id)
     {
+        $aulas = Aula::where('escola_id', Auth::user()->escola_id)->orderBy('nome')->get();
         $professores = User::where('escola_id', Auth::user()->escola_id)->where('role', '400')->orderBy('name')->get();
         $alunos = User::where('escola_id', Auth::user()->escola_id)->where('role', '500')->orderBy('name')->get();
         $turma = $id > 0 ? Turma::findOrFail($id) : new Turma();
         return view('turma.edit', [
+            'aulas' => $aulas,
             'turma' => $turma,
             'profesores' => $professores,
             'alunos' => $alunos,
@@ -52,7 +55,6 @@ class TurmasController extends Controller
         $turma->escola_id = Auth::user()->escola_id;
         $turma->save();
         $turma->alunos()->sync($request->alunos);
-        $turma->professores()->sync($request->professores);
         return redirect()->route('turma.index');
     }
 
@@ -71,7 +73,6 @@ class TurmasController extends Controller
         $turma = Turma::findOrFail($id);
         $turma = $this->setValue($turma, $request);
         $turma->alunos()->sync($request->alunos);
-        $turma->professores()->sync($request->professores);
         $turma->save();
         return redirect()->route('turma.index');
     }

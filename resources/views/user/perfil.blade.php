@@ -157,11 +157,27 @@
                             <li>
                                 <div class="title">
                                     <i class="material-icons">group</i>
-                                    Turmas
+                                    @if($user->role == 400)
+                                        Aulas
+                                    @else
+                                        Turmas
+                                    @endif
                                 </div>
                                 <div class="content">
                                     @if($user->role == 400)
-                                        {{ implode(', ', $user->professor_turmas->pluck('nome')->all()) }}
+                                        @php
+                                            $aulas = [];
+                                        @endphp
+                                        @foreach($user->aulaTurma as $aulaTurma)
+                                            @php
+                                                /** @var TYPE_NAME $aulaTurma */
+                                                $aulas[] = $aulaTurma->aula->nome;
+                                            @endphp
+                                        @endforeach
+                                        @php
+                                            $aulas = array_unique($aulas);
+                                        @endphp
+                                        {{ implode(', ', $aulas) }}
                                     @else
                                         {{ implode(', ', $user->aluno_turmas->pluck('nome')->all()) }}
                                     @endif

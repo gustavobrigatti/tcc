@@ -6,10 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Aula' => $baseDir . '/app/Models/Aula.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AlbunsController' => $baseDir . '/app/Http/Controllers/AlbunsController.php',
+    'App\\Http\\Controllers\\AulaController' => $baseDir . '/app/Http/Controllers/AulaController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
@@ -32,6 +32,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Album' => $baseDir . '/app/Models/Album.php',
+    'App\\Models\\Aula' => $baseDir . '/app/Models/Aula.php',
     'App\\Models\\Instituicao' => $baseDir . '/app/Models/Instituicao.php',
     'App\\Models\\Item_Mensagem' => $baseDir . '/app/Models/Item_Mensagem.php',
     'App\\Models\\Mensagem' => $baseDir . '/app/Models/Mensagem.php',

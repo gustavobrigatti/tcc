@@ -20,9 +20,7 @@ class Turma extends Model
         return $this->belongsToMany(User::class , 'alunos_turma');
     }
 
-    // SERÁ USADO PARA RELACIONAR PROFESSORES COM CLASSES DE AULA
-    public function professores()
-    {
-        return $this->belongsToMany(User::class , 'professores_turma');
+    public function aulas(){
+        return $this->hasMany(Aula_Turma::class);
     }
 }

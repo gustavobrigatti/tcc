@@ -367,10 +367,6 @@
                                 <input type="radio" name="gender" id="female" class="with-gap radio-col-blue"
                                        value="F" {{ old('gender', $user->genero) == 'F' ? 'checked':'' }}>
                                 <label for="female" class="m-l-20">Feminino</label>
-
-                                <input type="radio" name="gender" id="nao-binario" class="with-gap radio-col-blue"
-                                       value="NB" {{ old('gender', $user->genero) == 'NB' ? 'checked':'' }}>
-                                <label for="nao-binario" class="m-l-20">Não Binário</label>
                             </div>
                         </div>
                         <div style="width: 100%">

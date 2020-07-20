@@ -41,12 +41,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Turma::class, 'alunos_turma', 'user_id', 'turma_id');
     }
 
-    // SERÁ USADO PARA RELACIONAR PROFESSORES COM CLASSES DE AULA
-    public function professor_turmas()
-    {
-        return $this->belongsToMany(Turma::class, 'professores_turma', 'user_id', 'turma_id');
-    }
-
     public function alunos()
     {
         return $this->belongsToMany(User::class, 'alunos_responsaveis', 'responsavel_id', 'aluno_id');
@@ -55,5 +49,9 @@ class User extends Authenticatable
     public function responsaveis()
     {
         return $this->belongsToMany(User::class, 'alunos_responsaveis', 'aluno_id', 'responsavel_id');
+    }
+
+    public function aulaTurma(){
+        return $this->hasMany(Aula_Turma::class);
     }
 }
