@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Aula' => $baseDir . '/app/Models/Aula.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AlbunsController' => $baseDir . '/app/Http/Controllers/AlbunsController.php',
@@ -32,6 +33,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Album' => $baseDir . '/app/Models/Album.php',
     'App\\Models\\Instituicao' => $baseDir . '/app/Models/Instituicao.php',
+    'App\\Models\\Item_Mensagem' => $baseDir . '/app/Models/Item_Mensagem.php',
     'App\\Models\\Mensagem' => $baseDir . '/app/Models/Mensagem.php',
     'App\\Models\\Turma' => $baseDir . '/app/Models/Turma.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

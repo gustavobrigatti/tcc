@@ -176,6 +176,19 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="{{ substr(\Request::route()->getName(), 0, 4) == 'aula' ? 'active':""}}">
+                                    <a href="javascript:void(0);" class="menu-toggle">
+                                        <span>Aulas</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li class="{{ \Request::route()->getName() == 'aula.index' ? 'active':"" }}">
+                                            <a href="{{ route('aula.index') }}">Listar aulas</a>
+                                        </li>
+                                        <li class="{{ \Request::route()->getName() == 'aula.edit' && $id == 0 ? 'active':"" }}">
+                                            <a href="{{ route('aula.edit', 0) }}">Adicionar aula</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             @endif
                         </ul>
                     </li>

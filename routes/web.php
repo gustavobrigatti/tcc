@@ -82,6 +82,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['CheckUserRole:200']], function () {
         //Rotas para instituição
         Route::resource('turma', 'TurmasController');
+        //Rotas para aulas
+        Route::resource('aula', 'AulaController');
     });
 });
 

@@ -434,6 +434,7 @@ class ComposerStaticInitffc402bac10db01ce29e679c7a1dcff9
     );
 
     public static $classMap = array (
+        'App\\Aula' => __DIR__ . '/../..' . '/app/Models/Aula.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AlbunsController' => __DIR__ . '/../..' . '/app/Http/Controllers/AlbunsController.php',
@@ -460,6 +461,7 @@ class ComposerStaticInitffc402bac10db01ce29e679c7a1dcff9
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Album' => __DIR__ . '/../..' . '/app/Models/Album.php',
         'App\\Models\\Instituicao' => __DIR__ . '/../..' . '/app/Models/Instituicao.php',
+        'App\\Models\\Item_Mensagem' => __DIR__ . '/../..' . '/app/Models/Item_Mensagem.php',
         'App\\Models\\Mensagem' => __DIR__ . '/../..' . '/app/Models/Mensagem.php',
         'App\\Models\\Turma' => __DIR__ . '/../..' . '/app/Models/Turma.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
