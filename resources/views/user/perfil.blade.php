@@ -65,11 +65,6 @@
             },
         };
 
-        $("#envioPerfil").click(function (e) {
-            e.preventDefault();
-            myDropzone.processQueue();
-        });
-
         document.addEventListener('DOMContentLoaded', function () {
             var SPMaskBehavior = function (val) {
                     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';

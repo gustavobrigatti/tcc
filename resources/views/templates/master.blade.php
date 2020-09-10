@@ -193,20 +193,6 @@
                         </ul>
                     </li>
                 @endif
-                @if(\Illuminate\Support\Facades\Auth::user()->role == '400' || \Illuminate\Support\Facades\Auth::user()->role == '500')
-                    <li class="{{ \Request::route()->getName() == 'grade' ? 'active':'' }}">
-                        <a href="{{ route('grade') }}">
-                            <i class="material-icons">today</i>
-                            <span>Grade de Horários</span>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="">
-                            <i class="material-icons">grade</i>
-                            <span>Notas</span>
-                        </a>
-                    </li>
-                @endif
                 <li class="{{ \Request::route()->getName() == 'inbox.favoritas' || \Request::route()->getName() == 'inbox.arquivadas' || \Request::route()->getName() == 'inbox.excluidas' || \Request::route()->getName() == 'inbox.enviadas' ? 'active':""}}">
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">email</i>
@@ -227,6 +213,31 @@
                         </li>
                     </ul>
                 </li>
+                @if(\Illuminate\Support\Facades\Auth::user()->role == '400' || \Illuminate\Support\Facades\Auth::user()->role == '500')
+                    <li class="{{ \Request::route()->getName() == 'grade' ? 'active':'' }}">
+                        <a href="{{ route('grade') }}">
+                            <i class="material-icons">today</i>
+                            <span>Grade de Horários</span>
+                        </a>
+                    </li>
+                    <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' }}">
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">info_outline</i>
+                            <span>Consultas</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li class="">
+                                <a href="">Notas</a>
+                            </li>
+                            <li class="">
+                                <a href="">Tarefas</a>
+                            </li>
+                            <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' }}">
+                                <a href="{{ route('arquivo.index') }}">Arquivos</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
                 <li class="{{ substr(\Request::route()->getName(), 0, 5) == 'album' ? 'active':'' }}">
                     <a href="{{ route('album.index') }}">
                         <i class="material-icons">perm_media</i>

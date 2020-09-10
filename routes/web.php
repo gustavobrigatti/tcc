@@ -93,6 +93,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/grade', function (){
             return view('grade.index');
         })->name('grade');
+        //Rotas para arquivos
+        Route::resource('arquivo', 'ArquivosController');
+        //Leva para o metódo que faz o envio dos arquivos
+        Route::post('/arquivo/{arquivo}/upload', ['as' => 'arquivo.upload', 'uses' => 'ArquivosController@upload']);
+        //Leva para o metódo que faz o download do arquivo
+        Route::get('/arquivo/{arquivo}/download', ['as' => 'arquivo.download', 'uses' => 'ArquivosController@download']);
+        //Leva para o metódo que faz a exclusão do arquivo
+        Route::get('/arquivo/{arquivo}/delete', ['as' => 'arquivo.delete', 'uses' => 'ArquivosController@delete']);
     });
 });
 

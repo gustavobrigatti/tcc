@@ -55,6 +55,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('aulaTurma', function($value, $route) {
             return Hashids::decode($value)[0] ?? 0;
         });
+        Route::bind('arquivo', function($value, $route) {
+            return Hashids::decode($value)[0] ?? 0;
+        });
 
         parent::boot();
     }
