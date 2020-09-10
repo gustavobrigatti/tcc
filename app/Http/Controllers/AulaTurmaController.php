@@ -24,21 +24,25 @@ class AulaTurmaController extends Controller
 
         $user = User::findOrFail($request->user_id);
         foreach ($user->aulaTurma as $aulaTurma){
-            if ((($request->hora_inicio >= $aulaTurma->hora_inicio) && ($request->hora_inicio <= $aulaTurma->hora_fim)) || (($request->hora_fim >= $aulaTurma->hora_inicio) && ($request->hora_fim <= $aulaTurma->hora_fim))){
-                return redirect()
-                    ->back()
-                    ->with('alert', 'Professor com horário indisponível.')
-                    ->withInput($request->input());
+            if ($request->dia_semana == $aulaTurma->dia_semana){
+                if ((($request->hora_inicio >= $aulaTurma->hora_inicio) && ($request->hora_inicio <= $aulaTurma->hora_fim)) || (($request->hora_fim >= $aulaTurma->hora_inicio) && ($request->hora_fim <= $aulaTurma->hora_fim))){
+                    return redirect()
+                        ->back()
+                        ->with('alert', 'Professor com horário indisponível.')
+                        ->withInput($request->input());
+                }
             }
         }
 
         $turma = Turma::findOrFail($request->turma_id);
         foreach ($turma->aulas as $aula){
-            if ((($request->hora_inicio >= $aula->hora_inicio) && ($request->hora_inicio <= $aula->hora_fim)) || (($request->hora_fim >= $aula->hora_inicio) && ($request->hora_fim <= $aula->hora_fim))){
-                return redirect()
-                    ->back()
-                    ->with('alert', 'Turma com horário indisponível.')
-                    ->withInput($request->input());
+            if ($request->dia_semana == $aulaTurma->dia_semana){
+                if ((($request->hora_inicio >= $aula->hora_inicio) && ($request->hora_inicio <= $aula->hora_fim)) || (($request->hora_fim >= $aula->hora_inicio) && ($request->hora_fim <= $aula->hora_fim))){
+                    return redirect()
+                        ->back()
+                        ->with('alert', 'Turma com horário indisponível.')
+                        ->withInput($request->input());
+                }
             }
         }
 
