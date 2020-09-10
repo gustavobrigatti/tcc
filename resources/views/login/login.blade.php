@@ -29,7 +29,7 @@
 <div class="login-box">
     <div class="logo">
         <a href="javascript:void(0);">Fala<b>AÍ</b></a>
-        <small>Sistema de Comunicação Estudantil</small>
+        <small>Portal Estudantil</small>
     </div>
     <div class="card">
         <div class="body">
