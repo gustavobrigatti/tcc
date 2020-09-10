@@ -15,6 +15,9 @@
     <!-- Jquery Validation Plugin Css -->
     <script src="plugins/jquery-validation/jquery.validate.js"></script>
 
+    <!-- Bootstrap Notify Plugin Js -->
+    <script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
     <script src="js/pages/forms/form-validation.js"></script>
@@ -24,6 +27,19 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             $('.hour').mask('00:00');
+            var msg = '{{Session::get('alert')}}';
+            var exist = '{{Session::has('alert')}}';
+            if(exist){
+                $.notify({
+                    // options
+                    message: msg,
+                },{
+                    // settings
+                    type: 'danger',
+                    allow_dismiss: false,
+
+                });
+            }
         }, false);
     </script>
 @endpush

@@ -60,7 +60,7 @@ class TurmasController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = $this->validator($request, $id);
+        $validator = $this->validator($request);
 
         if ($validator->fails()) {
             return redirect()
@@ -86,7 +86,7 @@ class TurmasController extends Controller
         return redirect()->route('turma.index');
     }
 
-    public function validator($request, $id)
+    public function validator($request)
     {
         $validator = Validator::make($request->all(), [
             'nome' => 'required|max:100',

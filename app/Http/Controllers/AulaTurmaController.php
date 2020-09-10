@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Aula_Turma;
+use App\Models\Turma;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,6 +21,27 @@ class AulaTurmaController extends Controller
                 ->withErrors($validator)
                 ->withInput($request->input());
         }
+
+        $user = User::findOrFail($request->user_id);
+        foreach ($user->aulaTurma as $aulaTurma){
+            if ((($request->hora_inicio >= $aulaTurma->hora_inicio) && ($request->hora_inicio <= $aulaTurma->hora_fim)) || (($request->hora_fim >= $aulaTurma->hora_inicio) && ($request->hora_fim <= $aulaTurma->hora_fim))){
+                return redirect()
+                    ->back()
+                    ->with('alert', 'Professor com horário indisponível.')
+                    ->withInput($request->input());
+            }
+        }
+
+        $turma = Turma::findOrFail($request->turma_id);
+        foreach ($turma->aulas as $aula){
+            if ((($request->hora_inicio >= $aula->hora_inicio) && ($request->hora_inicio <= $aula->hora_fim)) || (($request->hora_fim >= $aula->hora_inicio) && ($request->hora_fim <= $aula->hora_fim))){
+                return redirect()
+                    ->back()
+                    ->with('alert', 'Turma com horário indisponível.')
+                    ->withInput($request->input());
+            }
+        }
+
         $aulaTurma = new Aula_Turma();
         $aulaTurma = $this->setValue($aulaTurma, $request);
         $aulaTurma->save();

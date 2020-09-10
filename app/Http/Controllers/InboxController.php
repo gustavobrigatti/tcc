@@ -95,8 +95,8 @@ class InboxController extends controller
         } elseif ($role == 500) {
             $users = User::where('escola_id', $escola_id)->where('id', '!=', $id)->where('role', '<', '400')->get();
             foreach (Auth::user()->aluno_turmas as $turma) {
-                foreach ($turma->professores as $professor) {
-                    $users[] = $professor;
+                foreach ($turma->aulas as $aula) {
+                    $users[] = $aula->user;
                 }
             }
         } elseif ($role == 600) {
