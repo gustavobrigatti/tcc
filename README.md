@@ -19,10 +19,10 @@ O sistema foi desenvolvido em **[PHP](https://www.php.net/manual/pt_BR/intro-wha
 
 ## Contribuidores
 
-O desenvolvimento do sistema foi feito pelo **[Gustavo](https://www.linkedin.com/in/gustavo-rosolen-brigatti-675307157/)**.
+O desenvolvimento do sistema foi feito pelo **[Gustavo](www.linkedin.com/in/gustavo-rosolen-brigatti)**.
 
 A documentação foi feita pela **[Nathália](https://www.linkedin.com/in/nathaliafalco/)** e pelo **[Mickael](https://www.linkedin.com/in/mickael-moreira-540b33180/)**.
 
 ## Contato
 
-Caso queira entrar em contato envie um email para gustavo.brigatti13@gmail.com ou pelo **[LinkedIn](https://www.linkedin.com/in/gustavo-rosolen-brigatti-675307157/)**.
+Caso queira entrar em contato envie um email para gustavo.brigatti13@gmail.com ou pelo **[LinkedIn](www.linkedin.com/in/gustavo-rosolen-brigatti)**.
