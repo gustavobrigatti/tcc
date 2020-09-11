@@ -109,7 +109,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        ARQUIVOS
+                        ARQUIVOS - {{ $arquivo->aula->nome }}({{ $arquivo->turma->nome }})
                     </h2>
                 </div>
                 <div class="body">

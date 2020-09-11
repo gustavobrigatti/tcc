@@ -58,6 +58,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('arquivo', function($value, $route) {
             return Hashids::decode($value)[0] ?? 0;
         });
+        Route::bind('tarefa', function($value, $route) {
+            return Hashids::decode($value)[0] ?? 0;
+        });
 
         parent::boot();
     }

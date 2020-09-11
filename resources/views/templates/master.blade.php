@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>{{ config('app.name') }}</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -220,7 +222,7 @@
                             <span>Grade de Horários</span>
                         </a>
                     </li>
-                    <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' }}">
+                    <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' || substr(\Request::route()->getName(), 0, 6) == 'tarefa' ? 'active':'' }}">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">info_outline</i>
                             <span>Consultas</span>
@@ -229,8 +231,8 @@
                             <li class="">
                                 <a href="">Notas</a>
                             </li>
-                            <li class="">
-                                <a href="">Tarefas</a>
+                            <li class="{{ substr(\Request::route()->getName(), 0, 6) == 'tarefa' ? 'active':'' }}">
+                                <a href="{{ route('tarefa.index') }}">Tarefas</a>
                             </li>
                             <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' }}">
                                 <a href="{{ route('arquivo.index') }}">Arquivos</a>
@@ -278,6 +280,15 @@
 
 <!-- Slimscroll Plugin Js -->
 <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+<script>
+    $(function() {
+        //
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+        });
+    });
+</script>
 
 @stack('scripts')
 

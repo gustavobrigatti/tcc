@@ -51,12 +51,12 @@ class AulaTurmaController extends Controller
         $aulaTurma = $this->setValue($aulaTurma, $request);
         $aulaTurma->save();
 
-        $arquivo = Arquivo::where('turma_id', $request->turma_id)->where('nome', $aulaTurma->aula->nome)->get();
+        $arquivo = Arquivo::where('turma_id', $request->turma_id)->where('aula_id', $aulaTurma->aula->id)->get();
         if (count($arquivo) == 0){
             $arquivo = new Arquivo();
             $arquivo->turma_id = $request->turma_id;
             $arquivo->user_id = $request->user_id;
-            $arquivo->nome = $aulaTurma->aula->nome;
+            $arquivo->aula_id = $aulaTurma->aula->id;
             $arquivo->save();
         }
         return redirect()->back();

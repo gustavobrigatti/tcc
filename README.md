@@ -1,7 +1,7 @@
 
 ## FalaAÍ
 
-O FalaAÍ é portal estudantil, focado em instituições de ensino fundamental, médio e cursos técnico. O sistema oferece as seguintes funções:
+O FalaAÍ é um portal estudantil, focado em instituições de ensino fundamental, médio e cursos técnico. O sistema oferece as seguintes funções:
 
 - Troca da mensagens entre diretoria, professores, alunos e responsáveis.
 - Lançamento de notas.

@@ -101,6 +101,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/arquivo/{arquivo}/download', ['as' => 'arquivo.download', 'uses' => 'ArquivosController@download']);
         //Leva para o metódo que faz a exclusão do arquivo
         Route::get('/arquivo/{arquivo}/delete', ['as' => 'arquivo.delete', 'uses' => 'ArquivosController@delete']);
+        //Rotas para tarefas
+        Route::resource('tarefa', 'TarefasController');
+        //Rota para buscar aulas para tarefas
+        Route::post('tarefa/buscaAulas', 'TarefasController@buscaAula');
     });
 });
 

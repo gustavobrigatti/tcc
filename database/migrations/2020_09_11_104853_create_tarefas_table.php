@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArquivosTable extends Migration
+class CreateTarefasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateArquivosTable extends Migration
      */
     public function up()
     {
-        Schema::create('arquivos', function (Blueprint $table) {
+        Schema::create('tarefas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger("turma_id");
-            $table->foreign('turma_id')->references('id')->on('turmas');
+            $table->foreign('turma_id')->references('id')->on('turma_id');
             $table->unsignedInteger("user_id");
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('user_id');
             $table->unsignedInteger("aula_id");
             $table->foreign('aula_id')->references('id')->on('aulas');
+            $table->string('nome');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +34,6 @@ class CreateArquivosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('arquivos');
+        Schema::dropIfExists('tarefas');
     }
 }

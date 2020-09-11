@@ -3,6 +3,7 @@
 @push('head')
     <!-- JQuery DataTable Css -->
     <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="plugins/fab/fab.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
@@ -16,6 +17,15 @@
 @endpush
 
 @section('content')
+    @if(\Illuminate\Support\Facades\Auth::user()->role == 400)
+        <div class="fab">
+            <button class="main" data-toggle="modal" data-target="#defaultModal">
+                <a href="{{ (route('tarefa.edit', 0)) }}" style="width: 100%; height: 100%">
+                    <i class="material-icons" style="padding-top: 8px; color: #fff">add</i>
+                </a>
+            </button>
+        </div>
+    @endif
     <!-- Basic Examples -->
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -45,7 +55,7 @@
                                 @forelse($aulas as $aula)
                                     <tr>
                                         <td>{{ $aula->nome }}</td>
-                                        <td><a href="/arquivo/{{ $turma->hash_id }}?a={{ $aula->hash_id }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
+                                        <td><a href="/tarefa/{{ $turma->hash_id }}?a={{ $aula->hash_id }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
                                     </tr>
                                 @empty
                                 @endforelse
@@ -67,7 +77,7 @@
                                 @forelse($turmas as $turma)
                                     <tr>
                                         <td>{{ $turma->nome }}</td>
-                                        <td><a href="/arquivo?t={{ $turma->hash_id }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
+                                        <td><a href="/tarefa?t={{ $turma->hash_id }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
                                     </tr>
                                 @empty
                                 @endforelse

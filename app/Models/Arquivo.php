@@ -12,7 +12,7 @@ class Arquivo extends Model
 
     protected $table = 'arquivos';
 
-    protected $fillable = ['turma_id', 'user_id', 'nome'];
+    protected $fillable = ['turma_id', 'user_id', 'aula_id'];
 
     // SERÁ USADO PARA RELACIONAR TURMA COM PASTA DE ARQUIVO
     public function turma()
@@ -23,6 +23,11 @@ class Arquivo extends Model
     //SERÁ USADO PARA RELACIONAR TURMA COM O PROFESSOR
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    //SERÁ USADO PARA RELACIONAR ARQUIVO COM O AULA
+    public function aula(){
+        return $this->belongsTo(Aula::class);
     }
 
     //SERÁ USADO PARA RELACIONAR A PASTA DE ARQUIVO COM OS ITENS
