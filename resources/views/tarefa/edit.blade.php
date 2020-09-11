@@ -19,7 +19,9 @@
     <script src="js/admin.js"></script>
     <script src="js/pages/forms/form-validation.js"></script>
     <script src="js/pages/forms/advanced-form-elements.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
     <script type="text/javascript">
+
         $('#turma').on('change', function() {
             if ($('#turma').val() !== "0") {
                 var turma = $('#turma').val();
@@ -35,6 +37,9 @@
                     $('#aula').prop('disabled', false).selectpicker('refresh');
                 });
             }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            $('.dateBR').mask('00/00/0000');
         });
     </script>
 @endpush
@@ -73,18 +78,33 @@
                     @endif
                 </div>
                 <div class="body">
-                    <form id="form_advanced_validation"
-                          action="{{ route($id > 0 ? 'tarefa.update' : 'tarefa.store', $tarefa->hash_id) }}"
-                          method="post">
+                    <form id="form_advanced_validation" action="{{ route($id > 0 ? 'tarefa.update' : 'tarefa.store', $tarefa->hash_id) }}" method="post">
                         {{ $id > 0 ? method_field('PUT') : '' }}
                         {{ csrf_field() }}
                         <div class="col-md-12">
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="nome"
-                                           value="{{ old('nome', $tarefa->nome) }}"
-                                           required>
-                                    <label class="form-label">Nome da Tarefa</label>
+                            <div class="col-xs-8">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="nome"
+                                               value="{{ old('nome', $tarefa->nome) }}"
+                                               required>
+                                        <label class="form-label">Nome da Tarefa</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control dateBR" name="data_entrega" value="{{ old('data_entrega', optional($tarefa->data_entrega)->format('d/m/Y')) }}" required>
+                                        <label class="form-label">Data de Entrega</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <textarea rows="4" name="descricao" class="form-control no-resize" placeholder="Descrição da tarefa..." required>{{ $tarefa->descricao }}</textarea>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xs-6">
@@ -94,7 +114,7 @@
                                         <select name="turma_id" id="turma" class="form-control show-tick" data-live-search="true" required>
                                             <option value="0" selected disabled>Selecione a turma</option>
                                             @foreach($turmas as $turma)
-                                                <option value="{{ $turma->id }}">{{ $turma->nome }}</option>
+                                                <option value="{{ $turma->id }}" {{ old('turma_id', $tarefa->turma_id) == $turma->id ? 'selected':'' }}>{{ $turma->nome }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -112,7 +132,7 @@
                             </div>
                         </div>
                         <div style="width: 100%">
-                            <button class="btn btn-primary waves-effect" style="width: 100%" type="submit">CADASTRAR
+                            <button class="btn btn-primary waves-effect" type="submit" style="width: 100%">CADASTRAR
                             </button>
                         </div>
                     </form>

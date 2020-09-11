@@ -3,11 +3,12 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Aula;
 use App\Models\Aula_Turma;
 use App\Models\Tarefa;
 use App\Models\Turma;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Http\Request;
@@ -57,13 +58,30 @@ class TarefasController extends Controller
     }
 
     public function show($id){
-        $turma = Turma::findOrFail($id);
-        if (isset($_GET['a'])){
+        if (isset($_GET['a']) && isset($_GET['t'])){
+            if (Hashids::decode($_GET['a']) == null || Hashids::decode($_GET['t']) == null){
+                return redirect()->back();
+            }
+            $tarefa = Tarefa::findOrFail($id);
+            return view('tarefa.show', [
+                'tarefa' => $tarefa,
+                'id' => $id
+            ]);
+        }elseif (isset($_GET['a'])){
             if (Hashids::decode($_GET['a']) == null){
                 return redirect()->back();
             }
+            $turma = Turma::findOrFail($id);
+            $aula = Aula::where('id', Hashids::decode($_GET['a']))->get()->first();
             $tarefas = Tarefa::where('turma_id', $id)->where('aula_id', Hashids::decode($_GET['a']))->get();
-            dd($tarefas);
+            return view('tarefa.show', [
+                'turma' => $turma,
+                'tarefas' => $tarefas,
+                'aula' => $aula,
+                'id' => $id
+            ]);
+        }else{
+            return redirect()->back();
         }
     }
 
@@ -104,14 +122,21 @@ class TarefasController extends Controller
     public function save($request, $tarefa){
         $this->validate($request, [
             'nome' => 'bail|required',
+            'data_entrega' => 'bail|required|date_format:d/m/Y',
+            'descricao' => 'bail|required',
             'turma_id' => 'bail|required',
-            'aula_id' => 'bail|required'
+            'aula_id' => 'bail|required',
+
         ],
         [
+            'data_entrega.required' => 'O campo data de entrega é obrigatório.',
+            'descricao.required' => 'O campo descrição é obrigatório.',
             'turma_id.required' => 'O campo turma é obrigatório.',
             'aula_id.required' => 'O campo aula é obrigatório.'
         ]);
+
         $tarefa->fill($request->input());
+        $tarefa->data_entrega = Carbon::createFromFormat('d/m/Y', $request->input('data_entrega', date('d/m/Y')))->toDateString();
         $tarefa->save();
     }
 
@@ -132,7 +157,8 @@ class TarefasController extends Controller
         if (Auth::user()->role != 400){
             return redirect()->back();
         }
-        $tarefa = $id > 0 ? Tarefa::findOrFail($id) : new Tarefa();
-        return redirect()->route('tarefas.index');
+        $tarefa = Tarefa::findOrFail($id);
+        $tarefa->delete();
+        return redirect()->route('tarefa.index');
     }
 }

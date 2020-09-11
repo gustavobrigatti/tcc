@@ -42,6 +42,7 @@ return array(
     'App\\Models\\Item_Arquivo' => $baseDir . '/app/Models/Item_Arquivo.php',
     'App\\Models\\Item_Mensagem' => $baseDir . '/app/Models/Item_Mensagem.php',
     'App\\Models\\Mensagem' => $baseDir . '/app/Models/Mensagem.php',
+    'App\\Models\\Tarefa' => $baseDir . '/app/Models/Tarefa.php',
     'App\\Models\\Turma' => $baseDir . '/app/Models/Turma.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

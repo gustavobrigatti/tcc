@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTarefasTable extends Migration
+class CreateItensTarefaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateTarefasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tarefas', function (Blueprint $table) {
+        Schema::create('itens_tarefa', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger("turma_id");
-            $table->foreign('turma_id')->references('id')->on('turma_id');
+            $table->unsignedInteger("tarefa_id");
+            $table->foreign('tarefa_id')->references('id')->on('tarefas');
             $table->unsignedInteger("user_id");
-            $table->foreign('user_id')->references('id')->on('user_id');
-            $table->unsignedInteger("aula_id");
-            $table->foreign('aula_id')->references('id')->on('aulas');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('nome');
-            $table->text('descricao');
-            $table->date('data_entrega');
+            $table->string('path');
+            $table->string('tipo');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +34,6 @@ class CreateTarefasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tarefas');
+        Schema::dropIfExists('itens_tarefa');
     }
 }

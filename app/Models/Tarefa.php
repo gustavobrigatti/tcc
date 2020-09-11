@@ -12,7 +12,9 @@ class Tarefa extends Model
 
     protected $table = 'tarefas';
 
-    protected $fillable = ['turma_id', 'user_id', 'aula_id', 'nome'];
+    protected $fillable = ['turma_id', 'user_id', 'aula_id', 'nome', 'descricao'];
+
+    protected $dates = ['data_entrega'];
 
     // SERÁ USADO PARA RELACIONAR TURMA COM TAREFA
     public function turma()
@@ -28,5 +30,10 @@ class Tarefa extends Model
     //SERÁ USADO PARA RELACIONAR A TAREFA COM A AULA
     public function aula(){
         return $this->belongsTo(Aula::class);
+    }
+
+    //SERÁ USADO PARA RELACIONAR O A TAREFA COM SEUS ARQUIVOS
+    public function itens(){
+        return $this->hasMany(Item_Tarefa::class);
     }
 }

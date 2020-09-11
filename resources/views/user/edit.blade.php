@@ -19,9 +19,7 @@
     <script src="js/admin.js"></script>
     <script src="js/pages/forms/form-validation.js"></script>
     <script src="js/pages/forms/advanced-form-elements.js"></script>
-
     <script src="js/jquery.mask.min.js"></script>
-
     <script type="text/javascript">
         var estados = [];
 

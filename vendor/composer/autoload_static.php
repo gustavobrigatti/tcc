@@ -470,6 +470,7 @@ class ComposerStaticInitffc402bac10db01ce29e679c7a1dcff9
         'App\\Models\\Item_Arquivo' => __DIR__ . '/../..' . '/app/Models/Item_Arquivo.php',
         'App\\Models\\Item_Mensagem' => __DIR__ . '/../..' . '/app/Models/Item_Mensagem.php',
         'App\\Models\\Mensagem' => __DIR__ . '/../..' . '/app/Models/Mensagem.php',
+        'App\\Models\\Tarefa' => __DIR__ . '/../..' . '/app/Models/Tarefa.php',
         'App\\Models\\Turma' => __DIR__ . '/../..' . '/app/Models/Turma.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

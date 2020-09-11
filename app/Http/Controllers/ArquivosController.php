@@ -64,6 +64,8 @@ class ArquivosController extends Controller
                 return redirect()->back();
             }
             $arquivo = Arquivo::where('turma_id', $id)->where('aula_id', Hashids::decode($_GET['a']))->get()->first();
+        }else{
+            return redirect()->back();
         }
         return view('arquivo.show', [
             'arquivo' => $arquivo,
