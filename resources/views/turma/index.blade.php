@@ -56,7 +56,14 @@
                                     <td style="vertical-align: middle;text-align: center;">
                                         {{ $turma->escolaridade }}
                                     </td>
-                                    <td style="vertical-align: middle;text-align: center;"><a href="{{ route('turma.edit', $turma->hash_id) }}" class="btn btn-primary waves-effect" style="width: 100%" >EDITAR</a></td>
+                                    <td style="width: 33%; vertical-align: middle;text-align: center;">
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role == 200)
+                                            <a href="/nota?t={{ $turma->hash_id }}" class="btn btn-primary waves-effect">NOTAS</a>
+                                            <a href="/tarefa?t={{ $turma->hash_id }}" class="btn btn-primary waves-effect">TAREFAS</a>
+                                            <a href="/arquivo?t={{ $turma->hash_id }}" class="btn btn-primary waves-effect">ARQUIVOS</a>
+                                        @endif
+                                        <a href="{{ route('turma.edit', $turma->hash_id) }}" class="btn btn-primary waves-effect {{ \Illuminate\Support\Facades\Auth::user()->role == 300 ? 'btn-block':'' }}">EDITAR</a>
+                                    </td>
                                 </tr>
                             @empty
                             @endforelse

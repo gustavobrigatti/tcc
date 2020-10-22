@@ -128,7 +128,7 @@
                         <span>Início</span>
                     </a>
                 </li>
-                @if(\Illuminate\Support\Facades\Auth::user()->role == 100 || \Illuminate\Support\Facades\Auth::user()->role == 200)
+                @if(\Illuminate\Support\Facades\Auth::user()->role == 100 || \Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 300)
                     <li class="{{ isset($ad) ? 'active':'' }}">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">settings</i>
@@ -164,7 +164,7 @@
                                     </ul>
                                 </li>
                             @endif
-                            @if(\Illuminate\Support\Facades\Auth::user()->role == 200)
+                            @if(\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 300)
                                 <li class="{{ substr(\Request::route()->getName(), 0, 5) == 'turma' ? 'active':""}}">
                                     <a href="javascript:void(0);" class="menu-toggle">
                                         <span>Turmas</span>
@@ -215,7 +215,7 @@
                         </li>
                     </ul>
                 </li>
-                @if(\Illuminate\Support\Facades\Auth::user()->role == '400' || \Illuminate\Support\Facades\Auth::user()->role == '500')
+                @if(\Illuminate\Support\Facades\Auth::user()->role == '400' || \Illuminate\Support\Facades\Auth::user()->role == '500' || \Illuminate\Support\Facades\Auth::user()->role == '600')
                     <li class="{{ \Request::route()->getName() == 'grade' ? 'active':'' }}">
                         <a href="{{ route('grade') }}">
                             <i class="material-icons">today</i>

@@ -54,7 +54,7 @@
                         <h2>
                             ALUNOS
                         </h2>
-                    @elseif(\Illuminate\Support\Facades\Auth::user()->role == 500)
+                    @elseif(\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 500 || \Illuminate\Support\Facades\Auth::user()->role == 600)
                         <h2>
                             NOTAS
                         </h2>
@@ -152,7 +152,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    @elseif(\Illuminate\Support\Facades\Auth::user()->role == 500)
+                    @elseif(\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 500 || \Illuminate\Support\Facades\Auth::user()->role == 600)
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover dataTable" style="white-space: nowrap;">
                                 <thead>
@@ -168,7 +168,7 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                @forelse(\Illuminate\Support\Facades\Auth::user()->notas->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id) as $nota)
+                                @forelse(\Illuminate\Support\Facades\Auth::user()->role == 500 ? \Illuminate\Support\Facades\Auth::user()->notas->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id) : \App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['al']))->first()->notas->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id) as $nota)
                                     <tr>
                                         <td style="vertical-align: middle;">{{ $nota->nome }}</td>
                                         <td style="vertical-align: middle;text-align: center">{{ number_format($nota->nota, 1, ',', '.') }}</td>
@@ -180,7 +180,7 @@
                                 @endforelse
                                 <tr>
                                     <td style="vertical-align: middle;"><b>MÉDIA</b></td>
-                                    <td style="vertical-align: middle;text-align: center"><b>{{ count(\Illuminate\Support\Facades\Auth::user()->media->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id)) == 0 ? 'INDISPONÍVEL':number_format(\Illuminate\Support\Facades\Auth::user()->media->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id)->first()->media, 1, ',', '.') }}</b></td>
+                                    <td style="vertical-align: middle;text-align: center"><b>{{ \Illuminate\Support\Facades\Auth::user()->role == 500 ? (count(\Illuminate\Support\Facades\Auth::user()->media->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id)) == 0 ? 'INDISPONÍVEL':number_format(\Illuminate\Support\Facades\Auth::user()->media->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id)->first()->media, 1, ',', '.')) : (count(\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['al']))->first()->media->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id)) == 0 ? 'INDISPONÍVEL':number_format(\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['al']))->first()->media->where('aula_id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['a'])[0])->where('turma_id', $id)->first()->media, 1, ',', '.')) }}</b></td>
                                 </tr>
                                 </tbody>
                             </table>

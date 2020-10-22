@@ -267,7 +267,7 @@
                                             Direção/Coordenação
                                         </option>
                                         <option value="300" {{ old('role', $user->role) == '300' ? 'selected':'' }}>
-                                            Bibliotecário(a)
+                                            Secretário(a)/Bibliotecário(a)
                                         </option>
                                         <option value="400" {{ old('role', $user->role) == '400' ? 'selected':'' }}>
                                             Professor(a)

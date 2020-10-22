@@ -19,7 +19,7 @@ class UsersController extends Controller
     {
         if (Auth::user()->role == 100) {
             $users = User::all();
-        } elseif (Auth::user()->role == 200) {
+        } elseif (Auth::user()->role == 200 || Auth::user()->role == 300) {
             $users = User::where('escola_id', Auth::user()->escola_id)->get();
         }
         return view('user.index', [
@@ -44,7 +44,7 @@ class UsersController extends Controller
         if (Auth::user()->role == 100) {
             $responsaveis = User::where('role', 600)->orderBy('name')->get();
             $alunos = User::where('role', 500)->orderBy('name')->get();
-        } elseif (Auth::user()->role == 200) {
+        } elseif (Auth::user()->role == 200 || Auth::user()->role == 300) {
             $responsaveis = User::where('role', 600)->where('escola_id', Auth::user()->escola_id)->orderBy('name')->get();
             $alunos = User::where('role', 500)->where('escola_id', Auth::user()->escola_id)->orderBy('name')->get();
         }
@@ -198,8 +198,7 @@ class UsersController extends Controller
             'email' => 'required|max:100|unique:users,email,' . $id,
             'cpf' => 'required|formato_cpf|cpf|unique:users,cpf,' . $id,
             'telefone' => 'required|celular_com_ddd',
-            'gender' => 'required',
-            'escola_id' => 'required',
+            'gender' => 'required'
         ]);
 
         return $validator;
@@ -217,7 +216,7 @@ class UsersController extends Controller
         $user->estado = $request->uf;
         $user->cidade = $request->cidade;
         $user->endereco = $request->endereco;
-        $user->escola_id = $request->escola_id;
+        $user->escola_id = Auth::user()->escola_id;
         return $user;
     }
 }

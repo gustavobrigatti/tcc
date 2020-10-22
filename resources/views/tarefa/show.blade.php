@@ -86,7 +86,7 @@
             </button>
         </div>
     @endif
-    @if(isset($_GET['a']) && isset($_GET['t']))
+    @if(isset($_GET['a']) && isset($_GET['t']) && (\Illuminate\Support\Facades\Auth::user()->role == 400 || \Illuminate\Support\Facades\Auth::user()->role == 500))
         <div class="fab">
             <button class="main" data-toggle="modal" data-target="#defaultModal">
                 @if(isset($_GET['a']) && isset($_GET['t']))
@@ -221,7 +221,11 @@
                                         <td style="vertical-align: middle;">{{ $tarefa->nome }}</td>
                                         <td style="vertical-align: middle;text-align: center">{{ $tarefa->created_at->format('d/m/Y') }}</td>
                                         <td style="vertical-align: middle;text-align: center">{{ $tarefa->data_entrega->format('d/m/Y') }}</td>
-                                        <td style="vertical-align: middle;text-align: center"><a href="/tarefa/{{ $tarefa->hash_id }}?t={{ $turma->hash_id }}&a={{ $aula->hash_id }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role == 600)
+                                            <td style="vertical-align: middle;text-align: center"><a href="/tarefa/{{ $tarefa->hash_id }}?t={{ $turma->hash_id }}&a={{ $aula->hash_id }}&alR={{ $_GET['alR'] }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
+                                        @else
+                                            <td style="vertical-align: middle;text-align: center"><a href="/tarefa/{{ $tarefa->hash_id }}?t={{ $turma->hash_id }}&a={{ $aula->hash_id }}" class="btn btn-primary btn-block waves-effect" >VISUALIZAR</a></td>
+                                        @endif
                                     </tr>
                                 @empty
                                 @endforelse
@@ -231,9 +235,9 @@
                         </table>
                     </div>
 
-                    @if(isset($_GET['a']) && isset($_GET['t']) && \Illuminate\Support\Facades\Auth::user()->role == 400)
+                    @if(isset($_GET['a']) && isset($_GET['t']) && (\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 400))
                         <br>
-                        <p><b style="font-size: large">MEUS ALUNOS: </b></p>
+                        <p><b style="font-size: large">{{ \Illuminate\Support\Facades\Auth::user()->role == 400 ? 'MEUS ':'' }}ALUNOS: </b></p>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover dataTable" style="white-space: nowrap;">
                                 <thead>
@@ -264,9 +268,9 @@
                         </div>
                     @endif
 
-                    @if((isset($_GET['a']) && isset($_GET['t']) && \Illuminate\Support\Facades\Auth::user()->role == 500) || (isset($_GET['a']) && isset($_GET['t']) && isset($_GET['al']) && \Illuminate\Support\Facades\Auth::user()->role == 400))
+                    @if((isset($_GET['a']) && isset($_GET['t']) && \Illuminate\Support\Facades\Auth::user()->role == 500) || (isset($_GET['a']) && isset($_GET['t']) && isset($_GET['al']) && (\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 400)) || (isset($_GET['a']) && isset($_GET['t']) && isset($_GET['alR']) && \Illuminate\Support\Facades\Auth::user()->role == 600))
                         <br>
-                        <p><b style="font-size: large">{{ isset($_GET['al']) ? ($user->genero == 'M' ? 'ENVIOS DO ALUNO ':'ENVIOS DA ALUNA ').strtoupper(strstr($user->name, ' ', true)).':':'MEUS ENVIOS:' }} </b></p>
+                        <p><b style="font-size: large">{{ isset($_GET['al']) ? ($user->genero == 'M' ? 'ENVIOS DO ALUNO ':'ENVIOS DA ALUNA ').strtoupper(strstr($user->name, ' ', true)):(\Illuminate\Support\Facades\Auth::user()->role == 500 ? 'MEUS ENVIOS:':(\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['alR']))->first()->genero == 'M' ? 'ENVIOS DO ALUNO ':'ENVIOS DA ALUNA ').strtoupper(strstr(\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['alR']))->first()->name, ' ', true))) }} </b></p>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover dataTable" style="white-space: nowrap;">
                                 <thead>
@@ -284,7 +288,7 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                    @forelse(isset($_GET['al']) ? $tarefa->itens->where('tipo', 'aluno')->where('user_id', $user->id) : $tarefa->itens->where('tipo', 'aluno')->where('user_id', \Illuminate\Support\Facades\Auth::user()->id) as $item)
+                                    @forelse(isset($_GET['al']) ? $tarefa->itens->where('tipo', 'aluno')->where('user_id', $user->id) : $tarefa->itens->where('tipo', 'aluno')->where('user_id', \Illuminate\Support\Facades\Auth::user()->role == 500 ? \Illuminate\Support\Facades\Auth::user()->id:\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['alR']))->first()->id) as $item)
                                         <tr>
                                             <td style="vertical-align: middle;">{{ $item->nome }}</td>
                                             <td style="vertical-align: middle;text-align: center">{{ $item->created_at->format('d/m/Y') }}</td>
@@ -303,11 +307,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if(count(\Illuminate\Support\Facades\Auth::user()->role == 400 ? $tarefa->comentarios->where('user_id', $user->id) : $tarefa->comentarios->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)) > 0)
+                        @if(count(\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 400 ? $tarefa->comentarios->where('user_id', $user->id) : $tarefa->comentarios->where('user_id', \Illuminate\Support\Facades\Auth::user()->role == 500 ? \Illuminate\Support\Facades\Auth::user()->id:\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['alR']))->first()->id)) > 0)
                             <br>
                             <div class="col-xs-12"><p><b style="font-size: large">COMENTÁRIOS: </b></p></div>
                         @endif
-                        @forelse(\Illuminate\Support\Facades\Auth::user()->role == 400 ? $tarefa->comentarios->where('user_id', $user->id) : $tarefa->comentarios->where('user_id', \Illuminate\Support\Facades\Auth::user()->id) as $comentario)
+                        @forelse(\Illuminate\Support\Facades\Auth::user()->role == 200 || \Illuminate\Support\Facades\Auth::user()->role == 400 ? $tarefa->comentarios->where('user_id', $user->id) : $tarefa->comentarios->where('user_id', \Illuminate\Support\Facades\Auth::user()->role == 500 ? \Illuminate\Support\Facades\Auth::user()->id:\App\Models\User::where('id', \Vinkla\Hashids\Facades\Hashids::decode($_GET['alR']))->first()->id) as $comentario)
                             @if(!$loop->first)
                             <div class="col-xs-12" style="border-top: 1px solid rgba(204, 204, 204, 0.35);"></div>
                             @endif
@@ -347,7 +351,7 @@
                                 @endphp
                             </p>
                         @empty
-                        @endif
+                        @endforelse
                         @if(\Illuminate\Support\Facades\Auth::user()->role == 400)
                             <br><br>
                             <form id="form_advanced_validation" action="{{ route('tarefa.storeComentario', $tarefa->hash_id) }}" method="post">

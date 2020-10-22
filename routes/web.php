@@ -51,8 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
     //Leva para o métpdp que exibe um álbum específico
     Route::get('/album/{album}' , ['as' => 'album.show', 'uses' => 'AlbunsController@show']);
 
-    //Rotas acessadas apenas por usuários logados do tipo 100 ou 200
-    Route::group(['middleware' => ['CheckUserRole:100,200']], function () {
+    //Rotas acessadas apenas por usuários logados do tipo 100, 200 ou 300
+    Route::group(['middleware' => ['CheckUserRole:100,200,300']], function () {
         //Rotas para usuário
         Route::resource('user', 'UsersController');
         //Leva para o metódo que redefine a senha do usuário
@@ -78,8 +78,8 @@ Route::group(['middleware' => ['auth']], function () {
         //Rotas para instituição
         Route::resource('instituicao', 'InstituicoesController');
     });
-    //Rotas acessadas apenas por usuários logados do tipo 200
-    Route::group(['middleware' => ['CheckUserRole:200']], function () {
+    //Rotas acessadas apenas por usuários logados do tipo 200 ou 300
+    Route::group(['middleware' => ['CheckUserRole:200,300']], function () {
         //Rotas para instituição
         Route::resource('turma', 'TurmasController');
         //Rotas para aulas
@@ -87,8 +87,8 @@ Route::group(['middleware' => ['auth']], function () {
         //Rotas para aula_turma
         Route::resource('aulaTurma', 'AulaTurmaController');
     });
-    //Rotas acessadas apenas por usuários logados do tipo 400 e 500
-    Route::group(['middleware' => ['CheckUserRole:400,500']], function () {
+    //Rotas acessadas apenas por usuários logados do tipo 200,300,400,500 e 600
+    Route::group(['middleware' => ['CheckUserRole:200,400,500,600']], function () {
         //Rotas para grade de horários
         Route::get('/grade', function (){
             return view('grade.index');

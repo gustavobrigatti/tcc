@@ -28,7 +28,7 @@ class NotasController extends Controller
                 foreach ($aulasTurma as $aulaTurma){
                     $aulas[] = $aulaTurma->aula;
                 }
-            }elseif (Auth::user()->role == 500){
+            }elseif (Auth::user()->role == 200 || Auth::user()->role == 500 || Auth::user()->role == 600){
                 $aulas = [];
                 foreach ($turma->aulas as $aula){
                     $aulas[] = $aula->aula;
@@ -48,6 +48,13 @@ class NotasController extends Controller
                 $turmas_id = array_unique($turmas_id);
             }elseif (Auth::user()->role == 500){
                 foreach (Auth::user()->aluno_turmas as $turma){
+                    $turmas_id[] = $turma->id;
+                }
+            }elseif ((Auth::user()->role == 200 || Auth::user()->role == 600) && isset($_GET['al'])){
+                if (Hashids::decode($_GET['al']) == null){
+                    return redirect()->back();
+                }
+                foreach (User::where('id', Hashids::decode($_GET['al']))->first()->aluno_turmas as $turma){
                     $turmas_id[] = $turma->id;
                 }
             }
@@ -82,7 +89,7 @@ class NotasController extends Controller
             }else{
                 return redirect()->back();
             }
-        }elseif(Auth::user()->role == 500){
+        }elseif(Auth::user()->role == 200 || Auth::user()->role == 500 || Auth::user()->role == 600){
             return view('nota.show', [
                 'id' => $id
             ]);

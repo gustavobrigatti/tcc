@@ -70,13 +70,15 @@
 @endpush
 
 @section('content')
-    <div class="fab">
-        <button class="main" data-toggle="modal" data-target="#defaultModal">
-            <a style="width: 100%; height: 100%">
-                <i class="material-icons" style="padding-top: 8px; color: #fff">file_upload</i>
-            </a>
-        </button>
-    </div>
+    @if(\Illuminate\Support\Facades\Auth::user()->role == 400 || \Illuminate\Support\Facades\Auth::user()->role == 500)
+        <div class="fab">
+            <button class="main" data-toggle="modal" data-target="#defaultModal">
+                <a style="width: 100%; height: 100%">
+                    <i class="material-icons" style="padding-top: 8px; color: #fff">file_upload</i>
+                </a>
+            </button>
+        </div>
+    @endif
     <!-- Default Size -->
     <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

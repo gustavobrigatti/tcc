@@ -112,7 +112,7 @@
                         @elseif($user->role == 200)
                             <p>Direção/Coordenação</p>
                         @elseif($user->role == 300)
-                            <p>Bibliotecári{{ $user->genero == 'M' ? 'o':'a' }}</p>
+                            <p>Secretári{{ $user->genero == 'M' ? 'o':'a' }}/Bibliotecári{{ $user->genero == 'M' ? 'o':'a' }}</p>
                         @elseif($user->role == 400)
                             <p>Professor{{ $user->genero == 'F' ? 'a':'' }}</p>
                         @elseif($user->role == 500)
