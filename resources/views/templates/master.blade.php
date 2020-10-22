@@ -222,14 +222,14 @@
                             <span>Grade de Horários</span>
                         </a>
                     </li>
-                    <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' || substr(\Request::route()->getName(), 0, 6) == 'tarefa' ? 'active':'' }}">
+                    <li class="{{ substr(\Request::route()->getName(), 0, 7) == 'arquivo' ? 'active':'' || substr(\Request::route()->getName(), 0, 6) == 'tarefa' ? 'active':'' || substr(\Request::route()->getName(), 0, 4) == 'nota' ? 'active':'' }}">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">info_outline</i>
                             <span>Consultas</span>
                         </a>
                         <ul class="ml-menu">
-                            <li class="">
-                                <a href="">Notas</a>
+                            <li class="{{ substr(\Request::route()->getName(), 0, 4) == 'nota' ? 'active':'' }}">
+                                <a href="{{ route('nota.index') }}">Notas</a>
                             </li>
                             <li class="{{ substr(\Request::route()->getName(), 0, 6) == 'tarefa' ? 'active':'' }}">
                                 <a href="{{ route('tarefa.index') }}">Tarefas</a>

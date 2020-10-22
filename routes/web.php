@@ -105,6 +105,22 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('tarefa', 'TarefasController');
         //Rota para buscar aulas para tarefas
         Route::post('tarefa/buscaAulas', 'TarefasController@buscaAula');
+        //Leva para o metódo que faz o envio das tarefas
+        Route::post('/tarefa/{tarefa}/upload', ['as' => 'tarefa.upload', 'uses' => 'TarefasController@upload']);
+        //Leva para o metódo que faz o download da tarefa
+        Route::get('/tarefa/{tarefa}/download', ['as' => 'tarefa.download', 'uses' => 'TarefasController@download']);
+        //Leva para o metódo que faz a exclusão da tarefa
+        Route::get('/tarefa/{tarefa}/delete', ['as' => 'tarefa.delete', 'uses' => 'TarefasController@delete']);
+        //Leva para o metódo que faz o envio do comentário
+        Route::post('/tarefa/{tarefa}/comentario', ['as' => 'tarefa.storeComentario', 'uses' => 'TarefasController@storeComentario']);
+        //Leva para o metódo que faz a exclusão do comentário
+        Route::get('/tarefa/{tarefa}/deleteComentario', ['as' => 'tarefa.deleteComentario', 'uses' => 'TarefasController@deleteComentario']);
+        //Rotas para notas
+        Route::resource('nota', 'NotasController');
+        //Rota para buscar alunos da turma
+        Route::post('nota/buscaAluno', 'NotasController@buscaAluno');
+        //Rota para salvar a média do aluno
+        Route::post('/nota/media', ['as' => 'nota.media', 'uses' => 'NotasController@media']);
     });
 });
 

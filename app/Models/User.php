@@ -54,4 +54,12 @@ class User extends Authenticatable
     public function aulaTurma(){
         return $this->hasMany(Aula_Turma::class);
     }
+
+    public function notas(){
+        return $this->hasMany(Nota::class);
+    }
+
+    public function media(){
+        return $this->hasMany(Media::class);
+    }
 }

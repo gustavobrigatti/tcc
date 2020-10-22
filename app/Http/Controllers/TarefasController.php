@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Aula;
 use App\Models\Aula_Turma;
+use App\Models\Comentario_Tarefa;
+use App\Models\Item_Tarefa;
 use App\Models\Tarefa;
 use App\Models\Turma;
+use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Http\Request;
 
@@ -58,7 +62,18 @@ class TarefasController extends Controller
     }
 
     public function show($id){
-        if (isset($_GET['a']) && isset($_GET['t'])){
+        if (isset($_GET['a']) && isset($_GET['t']) && isset($_GET['al'])){
+            if (Hashids::decode($_GET['a']) == null || Hashids::decode($_GET['t']) == null || Hashids::decode($_GET['al']) == null){
+                return redirect()->back();
+            }
+            $tarefa = Tarefa::findOrFail($id);
+            $user = User::where('id', Hashids::decode($_GET['al']))->get()->first();
+            return view('tarefa.show', [
+                'tarefa' => $tarefa,
+                'user' => $user,
+                'id' => $id
+            ]);
+        }elseif (isset($_GET['a']) && isset($_GET['t'])){
             if (Hashids::decode($_GET['a']) == null || Hashids::decode($_GET['t']) == null){
                 return redirect()->back();
             }
@@ -160,5 +175,65 @@ class TarefasController extends Controller
         $tarefa = Tarefa::findOrFail($id);
         $tarefa->delete();
         return redirect()->route('tarefa.index');
+    }
+
+    public function download($id){
+        $item = Item_Tarefa::findOrFail($id);
+        return Storage::download($item->path . '/' . $item->nome);
+    }
+
+    public function delete($id){
+        $item = Item_Tarefa::findOrFail($id);
+        Storage::delete($item->path . '/' . $item->nome);
+        $item->delete();
+        return redirect()->back();
+    }
+
+    public function upload(Request $request, $id){
+        $this->validate($request, [
+            'file' => 'bail|required',
+        ],
+        [
+            'file.required' => 'O campo arquivo é obrigatório.'
+        ]);
+        $tarefa = Tarefa::findOrFail($id);
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $file = $request->file('file')->getClientOriginalName();
+            $item = new Item_Tarefa();
+            $item->tarefa_id = $id;
+            $item->user_id = Auth::user()->id;
+            $item->nome = $file;
+            if (Auth::user()->role == 400){
+                $item->tipo = 'professor';
+                $item->path = '/tarefas/' . $tarefa->turma->id . '/' . $tarefa->aula->id . '/' . $id . '/professor';
+            }elseif (Auth::user()->role == 500){
+                $item->tipo = 'aluno';
+                $item->path = '/tarefas/' . $tarefa->turma->id . '/' . $tarefa->aula->id . '/' . $id . '/aluno';;
+            }
+            $upload = $request->file('file')->storeAs($item->path, $file);
+            $item->save();
+        }
+        return;
+    }
+
+    public function storeComentario(Request $request, $id){
+        $comentario = new Comentario_Tarefa();
+        $this->validate($request, [
+            'comentario' => 'bail|required',
+
+        ],
+        [
+            'comentario.required' => 'O campo comentário é obrigatório.',
+        ]);
+        $comentario->fill($request->input());
+        $comentario->tarefa_id = $id;
+        $comentario->save();
+        return redirect()->back();
+    }
+
+    public function deleteComentario($id){
+        $comentario = Comentario_Tarefa::findOrFail($id);
+        $comentario->delete();
+        return redirect()->back();
     }
 }

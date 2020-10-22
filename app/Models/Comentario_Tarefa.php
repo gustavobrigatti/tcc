@@ -6,13 +6,13 @@ use App\Traits\Hashid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item_Tarefa extends Model
+class Comentario_Tarefa extends Model
 {
     use Hashid, SoftDeletes;
 
-    protected $table = 'itens_tarefa';
+    protected $table = 'comentarios_tarefa';
 
-    protected $fillable = ['tarefa_id', 'user_id', 'nome', 'path', 'tipo'];
+    protected $fillable = ['tarefa_id', 'user_id', 'comentario'];
 
     public function tarefa(){
         return $this->belongsTo(Tarefa::class);

@@ -32,8 +32,13 @@ class Tarefa extends Model
         return $this->belongsTo(Aula::class);
     }
 
-    //SERÁ USADO PARA RELACIONAR O A TAREFA COM SEUS ARQUIVOS
+    //SERÁ USADO PARA RELACIONAR A TAREFA COM SEUS ARQUIVOS
     public function itens(){
         return $this->hasMany(Item_Tarefa::class);
+    }
+
+    //SERÁ USADO PARA RELACIONAR A TAREFA COM OS COMENTÁRIOS DO PROFESSOR
+    public function comentarios(){
+        return $this->hasMany(Comentario_Tarefa::class);
     }
 }
