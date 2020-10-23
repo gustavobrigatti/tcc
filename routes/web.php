@@ -41,6 +41,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/inbox/favoritas', ['as' => 'inbox.favoritas', 'uses' => 'InboxController@favoritas']);
     Route::get('/inbox/arquivadas', ['as' => 'inbox.arquivadas', 'uses' => 'InboxController@arquivadas']);
     Route::get('/inbox/excluidas', ['as' => 'inbox.excluidas', 'uses' => 'InboxController@excluidas']);
+    //Rotas acessadas apenas por usuários logados do tipo 600
+    Route::group(['middleware' => ['CheckUserRole:600']], function () {
+        Route::get('/inbox/alunos', ['as' => 'inbox.alunos', 'uses' => 'InboxController@alunos']);
+    });
+    //Rotas acessadas apenas por usuários logados do tipo 200
+    Route::group(['middleware' => ['CheckUserRole:200']], function () {
+        Route::get('/inbox/direcao', ['as' => 'inbox.direcao', 'uses' => 'InboxController@direcao']);
+    });
     Route::resource('inbox', 'InboxController');
     Route::get('/inbox/{inbox}/arquivar', ['as' => 'inbox.arquivar', 'uses' => 'InboxController@arquivar']);
     Route::get('/inbox/{inbox}/favoritar', ['as' => 'inbox.favoritar', 'uses' => 'InboxController@favoritar']);
@@ -57,9 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('user', 'UsersController');
         //Leva para o metódo que redefine a senha do usuário
         Route::get('/user/{user}/resetarSenha', ['as' => 'user.resetarSenha', 'uses' => 'UsersController@resetarSenha']);
-    });
-    //Rotas acessadas apenas por usuários logados do tipo 100, 200 ou 300
-    Route::group(['middleware' => ['CheckUserRole:100,200,300']], function () {
         //Rota para página de adição/edição de album
         Route::get('/album/{album}/edit', ['as' => 'album.edit', 'uses' => 'AlbunsController@edit']);
         //Rota para o método de adição de álbum

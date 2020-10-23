@@ -191,11 +191,16 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role == 200)
+                                    <li class="{{\Request::route()->getName() == 'inbox.direcao' ? 'active':""}}">
+                                        <a href="{{ route('inbox.direcao') }}">Mensagens</a>
+                                    </li>
+                                @endif
                             @endif
                         </ul>
                     </li>
                 @endif
-                <li class="{{ \Request::route()->getName() == 'inbox.favoritas' || \Request::route()->getName() == 'inbox.arquivadas' || \Request::route()->getName() == 'inbox.excluidas' || \Request::route()->getName() == 'inbox.enviadas' ? 'active':""}}">
+                <li class="{{ \Request::route()->getName() == 'inbox.favoritas' || \Request::route()->getName() == 'inbox.arquivadas' || \Request::route()->getName() == 'inbox.excluidas' || \Request::route()->getName() == 'inbox.enviadas' || \Request::route()->getName() == 'inbox.alunos' ? 'active':""}}">
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">email</i>
                         <span>Mensagens</span>
@@ -213,6 +218,11 @@
                         <li class="{{\Request::route()->getName() == 'inbox.excluidas' ? 'active':""}}">
                             <a href="{{ route('inbox.excluidas') }}">Excluídas</a>
                         </li>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 600)
+                            <li class="{{\Request::route()->getName() == 'inbox.alunos' ? 'active':""}}">
+                                <a href="{{ route('inbox.alunos') }}">Alunos</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->role == '400' || \Illuminate\Support\Facades\Auth::user()->role == '500' || \Illuminate\Support\Facades\Auth::user()->role == '600')

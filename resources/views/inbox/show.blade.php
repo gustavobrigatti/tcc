@@ -15,21 +15,23 @@
                     <h2>
                         {{ $item->mensagem->assunto }}
                     </h2>
-                    <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                               role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                @if($item->mensagem->user->id != Auth::user()->id)
-                                    <li><a href="{{ route('inbox.arquivar', $item->hash_id) }}">{{ $item->arquivado == null ? 'Arquivar':'Desarquivar' }}</a></li>
-                                    <li><a href="{{ route('inbox.favoritar', $item->hash_id) }}">{{ $item->favorito == null ? 'Favoritar':'Desfavoritar' }}</a></li>
-                                @endif
-                                <li><a href="{{ route('inbox.excluir', $item->hash_id) }}">{{ $item->deleted_at == null ? 'Excluir':'Restaurar' }}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    @if($item->user_id == Auth::user()->id)
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    @if($item->mensagem->user->id != Auth::user()->id)
+                                        <li><a href="{{ route('inbox.arquivar', $item->hash_id) }}">{{ $item->arquivado == null ? 'Arquivar':'Desarquivar' }}</a></li>
+                                        <li><a href="{{ route('inbox.favoritar', $item->hash_id) }}">{{ $item->favorito == null ? 'Favoritar':'Desfavoritar' }}</a></li>
+                                    @endif
+                                    <li><a href="{{ route('inbox.excluir', $item->hash_id) }}">{{ $item->deleted_at == null ? 'Excluir':'Restaurar' }}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    @endif
                 </div>
                 <div class="body">
                     <a href="{{ route('user.perfil.show', $item->mensagem->user->hash_id) }}" style=" width: 100%; border: 0px solid #fff; border-radius: 8px; background-color: #fff !important;" name="confirma" type="submit" value="Favoritar">
@@ -61,7 +63,7 @@
                         @endphp
                     </p>
                     <br>
-                    @if($item->mensagem->user->id != Auth::user()->id)
+                    @if($item->mensagem->user->id != Auth::user()->id && $item->user_id == Auth::user()->id)
                         <form method="POST" action="">
                             <input name="id" type="hidden">
                             <div class="form-group form-float">
@@ -72,12 +74,12 @@
                             </div>
                             <button type="submit" class="btn btn-block bg-blue waves-effect">ENVIAR RESPOSTA</button>
                         </form>
-                    @elseif($item->mensagem->user->id == Auth::user()->id)
+                    @elseif($item->mensagem->user->id == Auth::user()->id || \Illuminate\Support\Facades\Auth::user()->role == 200)
                         <p style="text-align: justify">
                             <b>
                                 Enviado para:
 
-                            @foreach($item->mensagem->itens->where('id', '!=', Auth::user()->id) as $user)
+                            @foreach($item->mensagem->itens->where('id', '!=', $item->mensagem->user_id) as $user)
                                 <a style="color:#2196F3;" rel="nofollow" href="{{ route('user.perfil.show', $user->hash_id) }}">{{ $user->name }}</a>@if(!$loop->last), @endif
                             @endforeach
                             </b>

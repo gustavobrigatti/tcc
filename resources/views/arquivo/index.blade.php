@@ -37,7 +37,7 @@
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Aula</th>
+                                    <th>Aluno</th>
                                     <th>Ações</th>
                                 </tr>
                                 </tfoot>

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Vinkla\Hashids\Facades\Hashids;
 
 class InboxController extends controller
 {
@@ -33,6 +34,40 @@ class InboxController extends controller
         } elseif ($filtro == 'enviadas') {
             $itens = Item_Mensagem::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
             return $itens;
+        }
+    }
+
+    public function alunos(){
+        if (!isset($_GET['al'])){
+            $alunos = Auth::user()->alunos;
+            return view('inbox.alunos', [
+                'alunos' => $alunos
+            ]);
+        }else{
+            if (Hashids::decode($_GET['al']) == null){
+                return redirect()->back();
+            }
+            $itens = Item_Mensagem::where('user_id', Hashids::decode($_GET['al']))->orderBy('created_at', 'desc')->withTrashed()->get();
+            return view('inbox.index', [
+                'itens' => $itens
+            ]);
+        }
+    }
+
+    public function direcao(){
+        if (!isset($_GET['us']) && !isset($_GET['msg'])){
+            $user_id = User::where('escola_id', Auth::user()->escola_id)->get()->pluck('id');
+            $mensagens = Mensagem::whereIn('user_id', $user_id)->get();
+            return view('inbox.direcao', [
+                'ad' => 'ad',
+                'mensagens' => $mensagens
+            ]);
+        }else{
+            if (Hashids::decode($_GET['us']) == null || Hashids::decode($_GET['msg']) == null){
+                return redirect()->back();
+            }
+            $item = Item_Mensagem::where('mensagem_id', Hashids::decode($_GET['msg']))->where('user_id', Hashids::decode($_GET['us']))->first();
+            return $this->show($item->id);
         }
     }
 
@@ -103,8 +138,8 @@ class InboxController extends controller
             $users = User::where('escola_id', $escola_id)->where('id', '!=', $id)->where('role', '<', '400')->get();
             foreach (Auth::user()->alunos as $aluno) {
                 foreach ($aluno->aluno_turmas as $turma) {
-                    foreach ($turma->professores as $professor) {
-                        $users[] = $professor;
+                    foreach ($turma->aulas as $aula) {
+                        $users[] = $aula->user;
                     }
                 }
             }
@@ -119,10 +154,14 @@ class InboxController extends controller
     public function show($id)
     {
         $item = Item_Mensagem::withTrashed()->findOrFail($id);
-        if ($item->user_id != Auth::user()->id) {
+        if (Auth::user()->role == 600 && Auth::user()->alunos->pluck('id')->contains($item->user_id)){
+
+        }elseif(Auth::user()->role == 200){
+
+        }elseif($item->user_id != Auth::user()->id) {
             return redirect()->route('logout');
         }
-        if ($item->viewed_at == null) {
+        if ($item->user_id == Auth::user()->id && $item->viewed_at == null) {
             $item->viewed_at = Carbon::now();
             $item->save();
         }

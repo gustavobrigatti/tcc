@@ -72,10 +72,31 @@
                         <a href="sign-up.html">Register Now!</a>
                     </div>
                     <div class="col-xs-6 align-right">
-                        <a href="forgot-password.html">Esqueceu a senha?</a>
+                        <a style="cursor:pointer; color: #2196f3" data-toggle="modal" data-target="#mdModal">Esqueceu a senha?</a>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- For Material Design Colors -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-blue">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Esqueceu a senha?</h4>
+            </div>
+            <div class="modal-body" style="text-align: justify">
+                Caso sua senha ainda não tenha sido modificada, ela será as 3 primeiras letras minúsculas do seu nome, somado aos 3 primeiros
+                dígitos do seu CPF.<br><br>
+                Exemplo: <b>gus123</b><br><br>
+                Se você modificou sua senha e esqueceu, entre em contato com alguém da direção, biblioteca ou secretaria para que sua senha
+                seja resetada para a padrão.
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">FECHAR</button>
+            </div>
         </div>
     </div>
 </div>
@@ -94,7 +115,10 @@
 
 <!-- Custom Js -->
 <script src="js/admin.js"></script>
+<script src="js/pages/ui/modals.js"></script>
 <script src="js/pages/examples/sign-in.js"></script>
+<!-- Demo Js -->
+<script src="js/demo.js"></script>
 </body>
 
 </html>
