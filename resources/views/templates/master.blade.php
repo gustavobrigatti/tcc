@@ -71,16 +71,18 @@
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header">
+            <!-- Call Search
             <a href="javascript:void(0);" class="navbar-toggle js-search"></a>
+            #END# Call Search -->
             <a href="javascript:void(0);" class="bars"></a>
             <a class="navbar-brand" href="{{ route('index') }}">{{ config('app.name') }}</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <!-- Call Search -->
+                <!-- Call Search
                 <li><a href="javascript:void(0);" class="js-search" data-close="true"><i
                             class="material-icons">search</i></a></li>
-                <!-- #END# Call Search -->
+                #END# Call Search -->
             </ul>
         </div>
     </div>
@@ -250,12 +252,14 @@
                         </ul>
                     </li>
                 @endif
-                <li class="{{ substr(\Request::route()->getName(), 0, 5) == 'album' ? 'active':'' }}">
-                    <a href="{{ route('album.index') }}">
-                        <i class="material-icons">perm_media</i>
-                        <span>Galeria</span>
-                    </a>
-                </li>
+                @if(\Auth::user()->role >= 200)
+                    <li class="{{ substr(\Request::route()->getName(), 0, 5) == 'album' ? 'active':'' }}">
+                        <a href="{{ route('album.index') }}">
+                            <i class="material-icons">perm_media</i>
+                            <span>Galeria</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- #Menu -->
