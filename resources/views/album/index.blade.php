@@ -46,7 +46,9 @@
                             <div class="carousel-inner" role="listbox">
                                 <div class="item active" style="height: 256px; overflow: hidden;">
                                     <a href="{{ route('album.show', $album->hash_id) }}">
-                                        <img style="object-fit: cover; height: 100%; width: 100%" src="/storage/albuns/{{ $album->id }}/{{ basename($fotos[$album->id]) }}"/>
+                                        @if(count($fotos) > 0)
+                                            <img style="object-fit: cover; height: 100%; width: 100%" src="/storage/albuns/{{ $album->id }}/{{ basename($fotos[$album->id]) }}"/>
+                                        @endif
                                     </a>
                                 </div>
                             </div>

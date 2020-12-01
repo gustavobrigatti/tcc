@@ -45,8 +45,10 @@ class AlbunsController extends Controller
 
         foreach ($albuns as $album) {
             $foto = glob(storage_path("app/public/albuns") . "/{$album->id}/*.*");
-            $rand = rand(0, count($foto) - 1);
-            $fotos[$album->id] = $foto[$rand];
+            if(count($foto) > 0){
+                $rand = rand(0, count($foto) - 1);
+                $fotos[$album->id] = $foto[$rand];
+            }
         }
 
         return view('album.index', [
